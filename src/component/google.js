@@ -15,7 +15,7 @@ function processTags(trend) {
 }
 
 export default function GoogleTrend() {
-    const trend = useSelector((state) => state.trend.value)
+    const trend = useSelector((state) => state.trend.valueGoogle)
     var tags = processTags(trend)
     
     if(trend.length === 0) {
@@ -26,6 +26,7 @@ export default function GoogleTrend() {
 
     return(
         <div>
+             <h2>Google</h2>
              <TagCloud
                 minSize={25}
                 maxSize={45}

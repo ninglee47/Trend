@@ -1,10 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
 import GoogleTrend from './component/google'
+import YoutubeTrend from './component/youtube';
 import React, { useState, useMemo } from 'react'
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
-import { updateTrend } from './redux/trendSlice';
+import { updateGoogleTrend, updateYoutubeTrend } from './redux/trendSlice';
 import { useSelector, useDispatch } from 'react-redux'
 
 async function getTrend(country) {
@@ -16,6 +17,7 @@ async function getTrend(country) {
 
   var res = await fetch("/trend", option)
   var dat = await res.json()
+  
   return dat
 }
 
@@ -33,9 +35,12 @@ function App() {
     console.log(value)
     getTrend(value).then(
       dat => {
-        console.log(dat.default.trendingSearchesDays[0].trendingSearches)
-        var trend = dat.default.trendingSearchesDays[0].trendingSearches
-        dispatch(updateTrend(trend))
+        console.log(dat)
+        const trendGoogle = JSON.parse(dat[0]).default.trendingSearchesDays[0].trendingSearches
+        dispatch(updateGoogleTrend(trendGoogle))
+
+        const trendYoutube = dat[1]
+        dispatch(updateYoutubeTrend(trendYoutube))
       }
     )
   }
@@ -45,6 +50,7 @@ function App() {
       <h2>Google Trends</h2>
       <Select options={options} value={value} onChange={changeHandler} />
       <GoogleTrend />
+      <YoutubeTrend />
     </div>
   );
 }

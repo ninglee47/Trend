@@ -3,16 +3,20 @@ import { createSlice } from '@reduxjs/toolkit'
 export const trendSlice = createSlice({
   name: 'trend',
   initialState: {
-    value: [],
+    valueGoogle: [],
+    valueYoutube: []
   },
   reducers: {
-    updateTrend: (state, action) => {
-      state.value = action.payload
+    updateGoogleTrend: (state, action) => {
+      state.valueGoogle = action.payload
+    },
+    updateYoutubeTrend: (state, action) => {
+      state.valueYoutube = action.payload
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { updateTrend } = trendSlice.actions
+export const { updateGoogleTrend, updateYoutubeTrend } = trendSlice.actions
 
 export default trendSlice.reducer
