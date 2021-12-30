@@ -26,7 +26,7 @@ export default function GoogleTrend() {
 
     return(
         <div>
-             <h2>Google</h2>
+             <h2>Google Keywords</h2>
              <TagCloud
                 minSize={25}
                 maxSize={45}

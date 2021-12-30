@@ -3,16 +3,18 @@ import { useSelector} from 'react-redux'
 
 function ListItem(props) {
     // Correct! There is no need to specify the key here:
-    const title = props.value.snippet.title
-    const url =  "https://www.youtube.com/watch?v=" + props.value.id
+    const title = props.value.name
+    const url =  props.value.url
     return <li><a href={url} target='_blank' rel="noreferrer">{title}</a></li>;
 }
 
-function VideoList(props) {
-    const videos = props.value;
-    const listItems = videos.map((video) =>
+function HashtagList(props) {
+    const hashtags = props.value[0].trends;
+    console.log(hashtags)
+   
+    const listItems = hashtags.slice(0, 9).map((hashtag) =>
       // Correct! Key should be specified inside the array.
-      <ListItem key={video.id} value={video} />
+      <ListItem key={hashtag.name} value={hashtag} />
     );
     return (
       <ul>
@@ -22,9 +24,9 @@ function VideoList(props) {
 }
 
 
-export default function YoutubeTrend() {
-    const trend = useSelector((state) => state.trend.valueYoutube)
-    //console.log(trend)
+export default function TwitterTrend() {
+    const trend = useSelector((state) => state.trend.valueTwitter)
+    console.log(trend)
 
     if(trend.length === 0) {
         return(
@@ -34,8 +36,8 @@ export default function YoutubeTrend() {
 
     return (
         <div>
-            <h2>Youtube Videos</h2>
-            <VideoList value={trend} />
+            <h2>Twitter Hashtags</h2>
+            <HashtagList value={trend} />
         </div>
     )
 }
