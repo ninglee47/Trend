@@ -30,7 +30,10 @@ export default function TwitterTrend() {
 
     if(trend.length === 0) {
         return(
-            <div></div>
+            <div>
+                <h2>Twitter Hashtags</h2>
+                <p>No data from the selected country</p>
+            </div>
         )
     }
 

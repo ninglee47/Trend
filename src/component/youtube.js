@@ -28,7 +28,10 @@ export default function YoutubeTrend() {
 
     if(trend.length === 0) {
         return(
-            <div></div>
+            <div>
+                <h2>Youtube Videos</h2>
+                <p>No data from the selected country</p>
+            </div>
         )
     }
 

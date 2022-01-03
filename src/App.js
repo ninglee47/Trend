@@ -37,21 +37,37 @@ function App() {
     getTrend(value).then(
       dat => {
         console.log(dat)
-        const trendGoogle = JSON.parse(dat[0]).default.trendingSearchesDays[0].trendingSearches
-        dispatch(updateGoogleTrend(trendGoogle))
-
-        const trendYoutube = dat[1]
-        dispatch(updateYoutubeTrend(trendYoutube))
-
-        const trendTwitter = dat[2]
-        dispatch(updateTwitterTrend(trendTwitter))
+        
+        if (dat[0].indexOf("default") != -1) {
+          const trendGoogle = JSON.parse(dat[0]).default.trendingSearchesDays[0].trendingSearches
+          dispatch(updateGoogleTrend(trendGoogle))
+        } else {
+          const dat = []
+          dispatch(updateGoogleTrend(dat))
+        }
+        
+        if (dat[1] != null) {
+          const trendYoutube = dat[1]
+          dispatch(updateYoutubeTrend(trendYoutube))
+        } else {
+          const dat = []
+          dispatch(updateYoutubeTrend(dat))
+        }
+        
+        if (dat[2] != null) {
+          const trendTwitter = dat[2]
+          dispatch(updateTwitterTrend(trendTwitter))
+        }else {
+          const dat = []
+          dispatch(updateTwitterTrend(dat))
+        }
       }
     )
   }
 
   return (
     <div>
-      <h2>Google Trends</h2>
+      <h2>Trending Topics</h2>
       <Select options={options} value={value} onChange={changeHandler} />
       <GoogleTrend />
       <YoutubeTrend />
