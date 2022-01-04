@@ -8,6 +8,8 @@ import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import { updateGoogleTrend, updateYoutubeTrend, updateTwitterTrend } from './redux/trendSlice';
 import { useSelector, useDispatch } from 'react-redux'
+import { Container, Row, Col, Stack } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 async function getTrend(country) {
   var option = {
@@ -67,11 +69,18 @@ function App() {
 
   return (
     <div>
-      <h2>Trending Topics</h2>
-      <Select options={options} value={value} onChange={changeHandler} />
-      <GoogleTrend />
-      <YoutubeTrend />
-      <TwitterTrend />
+      <h2 className="text-center">Trending Topics</h2>
+      <Stack gap={3}>
+        <Select className="text-center" options={options} value={value} onChange={changeHandler} />
+        <Container>
+          <Row>
+            <Col><GoogleTrend /></Col>
+            <Col><YoutubeTrend /></Col>
+            <Col><TwitterTrend /></Col>
+          </Row>
+        </Container>
+      </Stack>
+      
     </div>
   );
 }
