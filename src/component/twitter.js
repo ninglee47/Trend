@@ -21,7 +21,7 @@ function ListItem(props) {
 
 function HashtagList(props) {
     const hashtags = props.value[0].trends;
-    console.log(hashtags)
+    //console.log(hashtags)
    
     const listItems = hashtags.slice(0, 19).map((hashtag) =>
       // Correct! Key should be specified inside the array.

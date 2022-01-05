@@ -23,7 +23,7 @@ function ListItem(props) {
       <RelatedItem key={keyword.query} value={keyword} />
     );
 
-    return <li className='list-group-item'>
+    return <div className='list-group-item'>
         <a href={url} target='_blank' rel="noreferrer">{title}
            
         </a>
@@ -31,14 +31,14 @@ function ListItem(props) {
         <div>Related queries: 
             <div>{listItems}</div>
         </div>
-    </li>;
+    </div>;
 }
 
 function KeyList(props) {
     const keywords = props.value;
     //console.log(keywords)
    
-    const listItems = keywords.slice(0, 9).map((keyword, index) =>
+    const listItems = keywords.map((keyword, index) =>
       // Correct! Key should be specified inside the array.
       <ListItem key={index} value={keyword} />
     );
@@ -51,7 +51,7 @@ function KeyList(props) {
 
 export default function GoogleTrend() {
     const trend = useSelector((state) => state.trend.valueGoogle)
-    console.log(trend)
+    //console.log(trend)
     
     if(trend.length === 0) {
         return(

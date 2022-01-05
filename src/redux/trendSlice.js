@@ -5,7 +5,8 @@ export const trendSlice = createSlice({
   initialState: {
     valueGoogle: [],
     valueYoutube: [],
-    valueTwitter: []
+    valueTwitter: [],
+    tagData: []
   },
   reducers: {
     updateGoogleTrend: (state, action) => {
@@ -17,10 +18,13 @@ export const trendSlice = createSlice({
     updateTwitterTrend: (state, action) => {
       state.valueTwitter = action.payload
     },
+    updateTagData: (state, action) => {
+      state.tagData = action.payload
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { updateGoogleTrend, updateYoutubeTrend, updateTwitterTrend } = trendSlice.actions
+export const { updateGoogleTrend, updateYoutubeTrend, updateTwitterTrend, updateTagData } = trendSlice.actions
 
 export default trendSlice.reducer
