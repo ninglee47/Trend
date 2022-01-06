@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Container, Row, Col, Stack } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 async function getTrend(country) {
   var option = {
     method: "POST",
@@ -54,7 +55,7 @@ function App() {
       dat => {
         console.log(dat)
         
-        if (dat[0].indexOf("default") != -1) {
+        if (dat[0].indexOf("default") !== -1) {
           const trendGoogle = JSON.parse(dat[0]).default.trendingSearchesDays[0].trendingSearches
           dispatch(updateGoogleTrend(trendGoogle))
           const data = preprocess(trendGoogle)

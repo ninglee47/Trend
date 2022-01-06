@@ -1,6 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
+import styled from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+const StyledLink = styled.a`
+    text-decoration: none;
+
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+    }
+`;
 
 function ListItem(props) {
     // Correct! There is no need to specify the key here:
@@ -9,11 +18,11 @@ function ListItem(props) {
     
     if (props.value.tweet_volume == null) {
         return <li className='list-group-item'>
-                  <a href={url} target='_blank' rel="noreferrer">{title}</a>
+                  <StyledLink href={url} target='_blank' rel="noreferrer">{title}</StyledLink>
              </li>;
     } else {
         return <li className='list-group-item'>
-        <a href={url} target='_blank' rel="noreferrer">{title}</a>
+        <StyledLink href={url} target='_blank' rel="noreferrer">{title}</StyledLink>
         <div>Tweet volume {props.value.tweet_volume}</div>
        </li>;
     }

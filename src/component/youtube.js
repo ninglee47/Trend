@@ -1,6 +1,15 @@
 import React from 'react';
 import { useSelector} from 'react-redux'
+import styled from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+const StyledLink = styled.a`
+    text-decoration: none;
+
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+    }
+`;
 
 function ListItem(props) {
     // Correct! There is no need to specify the key here:
@@ -8,12 +17,12 @@ function ListItem(props) {
     const url =  "https://www.youtube.com/watch?v=" + props.value.id
     const channel = "https://www.youtube.com/channel/" + props.value.snippet.channelId
     return <li className='list-group-item'>
-        <a href={url} target='_blank' rel="noreferrer">{title}</a>
+        <StyledLink href={url} target='_blank' rel="noreferrer">{title}</StyledLink>
         <div>
             Channel: 
-            <a href={channel} target='_blank' rel="noreferrer">
+            <StyledLink href={channel} target='_blank' rel="noreferrer">
             {props.value.snippet.channelTitle}
-            </a>
+            </StyledLink>
         </div>
         <div>Views: {props.value.statistics.viewCount}</div>
     </li>

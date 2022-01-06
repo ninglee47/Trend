@@ -1,6 +1,15 @@
 import React from 'react';
 import { useSelector} from 'react-redux'
+import styled from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+const StyledLink = styled.a`
+    text-decoration: none;
+
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+    }
+`;
 
 function RelatedItem(props) {
     // Correct! There is no need to specify the key here:
@@ -9,7 +18,7 @@ function RelatedItem(props) {
     const url =  domian + props.value.exploreLink
     
     return <li className='list-inline-item'>
-        <a href={url} target='_blank' rel="noreferrer">{title} </a>
+        <StyledLink href={url} target='_blank' rel="noreferrer">{title} </StyledLink>
     </li>;
 }
 
@@ -24,9 +33,9 @@ function ListItem(props) {
     );
 
     return <div className='list-group-item'>
-        <a href={url} target='_blank' rel="noreferrer">{title}
+        <StyledLink href={url} target='_blank' rel="noreferrer">{title}
            
-        </a>
+        </StyledLink>
         <div><span>Traffic: {props.value.formattedTraffic}</span></div>
         <div>Related queries: 
             <div>{listItems}</div>

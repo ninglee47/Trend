@@ -17,6 +17,7 @@
     "react-select": "^5.2.1",
     "react-select-country-list": "^2.2.3",
     "react-tagcloud": "^2.1.1",
+    "styled-components": "^5.3.3",
     "web-vitals": "^2.1.2"
   },
   "proxy": "http://localhost:3000",
