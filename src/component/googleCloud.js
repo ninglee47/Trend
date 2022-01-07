@@ -3,26 +3,13 @@ import { useSelector} from 'react-redux'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { TagCloud } from 'react-tagcloud'
 
-function preprocess(trend) {
-    let data = []
-    trend.map((item)=> {
-        var elm ={}
-        var num = item.formattedTraffic.replace('K+', '')
-        elm.value = item.title.query
-        elm.count = parseInt(num) + 5*parseInt(num) 
-        data.push(elm)
-    })
-    console.log(data)
-    return data
-}
-
 export default function GoogleCloud() {
     const trend = useSelector((state) => state.trend.tagData)
     //console.log(trend)
 
     const options = {
-        luminosity: 'dark',
-        hue: '#00FFFF'
+        luminosity: 'bright',
+        hue: '#5B92ED'
     }
 
     //console.log(options)
@@ -37,11 +24,11 @@ export default function GoogleCloud() {
     }
 
     return(
-        <div className='card'>
-             <h2 className="text-center card-header">Google Keywords Cloud</h2>
+        <div>
+             
              <TagCloud
                 minSize={25}
-                maxSize={200}
+                maxSize={100}
                 tags={trend}
                 colorOptions={options}
                 onClick={tag => alert(`'${tag.value}' was selected!`)}
