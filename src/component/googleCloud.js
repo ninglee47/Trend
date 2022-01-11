@@ -1,6 +1,6 @@
 import React, {useState ,useEffect} from 'react';
 import { useSelector} from 'react-redux'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import EmptyDiv from './empty';
 import { TagCloud } from 'react-tagcloud'
 
 export default function GoogleCloud() {
@@ -17,8 +17,7 @@ export default function GoogleCloud() {
     if(trend.length === 0) {
         return(
             <div>
-                <h2 className="text-center">Google Keywords Cloud</h2>
-                <p className="text-center">No data from the selected country</p>
+                <EmptyDiv />
             </div>
         )
     }

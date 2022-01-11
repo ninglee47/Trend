@@ -1,15 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
-import styled from 'styled-components';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import EmptyDiv from './empty';
 
-const StyledLink = styled.a`
-    text-decoration: none;
-
-    &:focus, &:hover, &:visited, &:link, &:active {
-        text-decoration: none;
-    }
-`;
 
 function ListItem(props) {
     // Correct! There is no need to specify the key here:
@@ -18,11 +10,11 @@ function ListItem(props) {
     
     if (props.value.tweet_volume == null) {
         return <li className='list-group-item'>
-                  <StyledLink href={url} target='_blank' rel="noreferrer">{title}</StyledLink>
+                  <a href={url} target='_blank' rel="noreferrer">{title}</a>
              </li>;
     } else {
         return <li className='list-group-item'>
-        <StyledLink href={url} target='_blank' rel="noreferrer">{title}</StyledLink>
+        <a href={url} target='_blank' rel="noreferrer">{title}</a>
         <div>Tweet volume {props.value.tweet_volume}</div>
        </li>;
     }
@@ -51,8 +43,7 @@ export default function TwitterTrend() {
     if(trend.length === 0) {
         return(
             <div>
-                <h2 className="text-center">Twitter Hashtags</h2>
-                <p className="text-center">No data from the selected country</p>
+                <EmptyDiv />
             </div>
         )
     }

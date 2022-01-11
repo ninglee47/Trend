@@ -9,46 +9,13 @@ import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import { updateGoogleTrend, updateYoutubeTrend, updateTwitterTrend, updateTagData } from './redux/trendSlice';
 import { useSelector, useDispatch } from 'react-redux'
-import { Container, Row, Col, Stack, Navbar, Nav } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import styled from 'styled-components';
+import { ChakraProvider, Grid, GridItem, Text, VStack, Box, Checkbox, Stack, Wrap, extendTheme, Center} from '@chakra-ui/react'
 
-const Brand = styled.span`
-  width: 380px;
-  height: 64px;
-  margin: 0 72px 0 0;
-  font-size: 32px;
-  font-weight: bold;
-  line-height: 2;
-  letter-spacing: normal;
-  color: #424242;
-`
-const DropSelect = styled(Select)`
-  width: 317px;
-  height: 32px;
-  margin: 17px 93px 15px 72px;
-  object-fit: contain;
-`
-const NavSection = styled(Nav)`
-  width: 54px;
-  height: 21px;
-  font-size: 16px;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: center;
-  color: #8d97d7;
-`
-const SiteName = styled.div`
-  font-size: 28px;
-  font-weight: 600;
-  line-height: 1.5;
-  letter-spacing: normal;
-  color: #424242;
-  text-align: center;
-`
+const theme = extendTheme({
+  colors: {
+    checkbox: {box: "#5a67b2"}
+  },
+})
 
 async function getTrend(country) {
   var option = {
@@ -76,6 +43,14 @@ function preprocess(trend) {
   return data
 }
 
+function ViewChange(prop) {
+  const checked = prop.isTicked
+  if (checked) {
+    return <GoogleCloud />
+  } 
+    return <GoogleTrend />
+}
+
 function App() {
   //Global state
   const trend = useSelector((state) => state.trend.value)
@@ -84,6 +59,11 @@ function App() {
   //Local state
   const [value, setValue] = useState('')
   const options = useMemo(() => countryList().getData(), [])
+  const [view, setView] = useState(true)
+
+  const [checkedItems, setCheckedItems] = React.useState([true, false])
+  const allChecked = checkedItems.every(Boolean)
+  const isIndeterminate = checkedItems.some(Boolean) && !allChecked
 
   const changeHandler = value => {
     setValue(value)
@@ -120,45 +100,82 @@ function App() {
       }
     )
   }
+  
+  const handleViewChange = (e) => {
+    setCheckedItems([e.target.checked, e.target.checked])
+  }
 
   return (
-    <div>
-      <Navbar>
-        <Container>
-          <Navbar.Brand><Brand>Exploring Trending Topics</Brand></Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <DropSelect className="text-center" options={options} value={value} onChange={changeHandler} />
-              <Stack direction='horizontal' gap={4}>
-                <NavSection>Google</NavSection>
-                <NavSection>Youtube</NavSection>
-                <NavSection>Twitter</NavSection>
-              </Stack>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-      
-      <Stack gap={3}>
-        <Container>
-          <Row className="justify-content-md-center">
-            <SiteName>Google</SiteName>
-            <GoogleCloud />
-            
-          </Row>
-          <Row>
-            <SiteName>Youtube</SiteName>
-            <Col><YoutubeTrend /></Col> 
-          </Row>
-          <Row>
-            <SiteName>Twitter</SiteName>
-            <Col><TwitterTrend /></Col>
-          </Row> 
-        </Container>
-      </Stack>
-      
-    </div>
+    <ChakraProvider theme={theme}>
+        <Grid templateColumns='repeat(10, 1fr)' gap={6} mt='56px' mb='40px'>
+          <GridItem ml='5px' colSpan={3}>
+            <Text fontSize={32} fontWeight={'bold'} fontFamily={'NunitoSans'} color={'#424242'}>
+              Exploring Trending Topics
+            </Text>
+          </GridItem>
+          <GridItem colSpan={4} mt='9px'>
+            <Select options={options} value={value} onChange={changeHandler} />
+          </GridItem>
+          <GridItem colSpan={1} mt='15px'>
+            <Text fontSize={16} fontFamily={'NunitoSans'} color={'#8d97d7'} fontWeight={600} _hover={{ fontWeight: "bold"}}>
+              Google
+            </Text>
+          </GridItem>
+          <GridItem colSpan={1} mt='15px'>
+            <Text fontSize={16} fontFamily={'NunitoSans'} color={'#8d97d7'} fontWeight={600} _hover={{ fontWeight: "bold"}}>
+              Youtube
+            </Text>
+          </GridItem>
+          <GridItem colSpan={1} mt='15px'>
+            <Text fontSize={16} fontFamily={'NunitoSans'} color={'#8d97d7'} fontWeight={600} _hover={{ fontWeight: "bold"}}>
+              Twitter
+            </Text>
+          </GridItem>
+        </Grid>
+
+        <VStack spacing={20}>
+          <Box>
+              <Text fontSize={28} fontFamily={'NunitoSans'} color={'#424242'} fontWeight={600} align='center'>Google</Text>
+                <Wrap justify='center'>
+
+                  <Checkbox 
+                  
+                  isChecked={checkedItems[0]} 
+                  onChange={() => setCheckedItems([false, true])}>
+                    Word Cloud
+                  </Checkbox>
+
+                  <Checkbox 
+                  
+                  isChecked={checkedItems[1]} 
+                  onChange={() => {setCheckedItems([true, false])
+                  }}>
+                    List View
+                  </Checkbox>
+
+                </Wrap> 
+                <ViewChange isTicked={checkedItems[0]} />
+                <GoogleCloud />
+          </Box>
+
+          <Box>
+            <Text fontSize={28} fontFamily={'NunitoSans'} color={'#424242'} fontWeight={600} align='center'>Youtube</Text>
+            <Wrap justify='center'>
+              <Checkbox  defaultChecked >Word Cloud</Checkbox>
+              <Checkbox >List View</Checkbox>
+            </Wrap>
+            <YoutubeTrend />
+          </Box>
+          <Box>
+            <Text fontSize={28} fontFamily={'NunitoSans'} color={'#424242'} fontWeight={600} align='center'>Twitter</Text>
+               <Wrap justify='center'>
+                  <Checkbox  defaultChecked>Word Cloud</Checkbox>
+                  <Checkbox >List View</Checkbox>
+                </Wrap>
+              <TwitterTrend />
+          </Box>
+        </VStack>
+    </ChakraProvider>
   );
 }
 

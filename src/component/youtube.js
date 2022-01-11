@@ -1,15 +1,6 @@
 import React from 'react';
 import { useSelector} from 'react-redux'
-import styled from 'styled-components';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-const StyledLink = styled.a`
-    text-decoration: none;
-
-    &:focus, &:hover, &:visited, &:link, &:active {
-        text-decoration: none;
-    }
-`;
+import EmptyDiv from './empty';
 
 function ListItem(props) {
     // Correct! There is no need to specify the key here:
@@ -17,12 +8,12 @@ function ListItem(props) {
     const url =  "https://www.youtube.com/watch?v=" + props.value.id
     const channel = "https://www.youtube.com/channel/" + props.value.snippet.channelId
     return <li className='list-group-item'>
-        <StyledLink href={url} target='_blank' rel="noreferrer">{title}</StyledLink>
+        <a href={url} target='_blank' rel="noreferrer">{title}</a>
         <div>
             Channel: 
-            <StyledLink href={channel} target='_blank' rel="noreferrer">
+            <a href={channel} target='_blank' rel="noreferrer">
             {props.value.snippet.channelTitle}
-            </StyledLink>
+            </a>
         </div>
         <div>Views: {props.value.statistics.viewCount}</div>
     </li>
@@ -49,8 +40,7 @@ export default function YoutubeTrend() {
     if(trend.length === 0) {
         return(
             <div>
-                <h2 className="text-center">Youtube Videos</h2>
-                <p className="text-center">No data from the selected country</p>
+                <EmptyDiv />
             </div>
         )
     }
