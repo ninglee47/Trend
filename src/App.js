@@ -4,12 +4,12 @@ import GoogleTrend from './component/google'
 import YoutubeTrend from './component/youtube';
 import TwitterTrend from './component/twitter';
 import GoogleCloud from './component/googleCloud';
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useRef } from 'react'
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import { updateGoogleTrend, updateYoutubeTrend, updateTwitterTrend, updateTagData } from './redux/trendSlice';
 import { useSelector, useDispatch } from 'react-redux'
-import { ChakraProvider, Grid, GridItem, Text, VStack, Box, Checkbox, Stack, Wrap, extendTheme, Center} from '@chakra-ui/react'
+import { ChakraProvider, Grid, GridItem, Text, VStack, Box, Checkbox, Stack, Wrap, extendTheme, Center, Button} from '@chakra-ui/react'
 
 const theme = extendTheme({
   colors: {
@@ -59,12 +59,21 @@ function App() {
   //Local state
   const [value, setValue] = useState('')
   const options = useMemo(() => countryList().getData(), [])
-  const [view, setView] = useState(true)
 
+  //View switch
   const [checkedItems, setCheckedItems] = React.useState([true, false])
-  const allChecked = checkedItems.every(Boolean)
-  const isIndeterminate = checkedItems.some(Boolean) && !allChecked
-
+  
+  //Scroll down button
+  const googleRef = useRef(null)
+  const youtubeRef = useRef(null)
+  const twitterRef = useRef(null)
+  const googleScroll = () => {googleRef.current.scrollIntoView()}
+  const youtubeScroll = () => {youtubeRef.current.scrollIntoView()}
+  const twitterScroll = () => {twitterRef.current.scrollIntoView()}
+  
+  
+  
+  //Dropdown menu event handler
   const changeHandler = value => {
     setValue(value)
     console.log(value)
@@ -101,10 +110,6 @@ function App() {
     )
   }
   
-  const handleViewChange = (e) => {
-    setCheckedItems([e.target.checked, e.target.checked])
-  }
-
   return (
     <ChakraProvider theme={theme}>
         <Grid templateColumns='repeat(10, 1fr)' gap={6} mt='56px' mb='40px'>
@@ -116,49 +121,58 @@ function App() {
           <GridItem colSpan={4} mt='9px'>
             <Select options={options} value={value} onChange={changeHandler} />
           </GridItem>
-          <GridItem colSpan={1} mt='15px'>
-            <Text fontSize={16} fontFamily={'NunitoSans'} color={'#8d97d7'} fontWeight={600} _hover={{ fontWeight: "bold"}}>
+          <GridItem colSpan={1} mt='9px' onClick={googleScroll}>
+            <Button variant='ghost'>
+            <Text fontSize={16} fontFamily={'NunitoSans'} color={'#8d97d7'} fontWeight={600}>
               Google
             </Text>
+
+            </Button>
+            
           </GridItem>
-          <GridItem colSpan={1} mt='15px'>
-            <Text fontSize={16} fontFamily={'NunitoSans'} color={'#8d97d7'} fontWeight={600} _hover={{ fontWeight: "bold"}}>
-              Youtube
-            </Text>
+          <GridItem colSpan={1} mt='9px' onClick={youtubeScroll}> 
+            <Button variant='ghost'>
+              <Text fontSize={16} fontFamily={'NunitoSans'} color={'#8d97d7'} fontWeight={600}>
+                Youtube
+              </Text>
+            </Button> 
           </GridItem>
-          <GridItem colSpan={1} mt='15px'>
-            <Text fontSize={16} fontFamily={'NunitoSans'} color={'#8d97d7'} fontWeight={600} _hover={{ fontWeight: "bold"}}>
-              Twitter
-            </Text>
+
+          <GridItem colSpan={1} mt='9px' onClick={twitterScroll}>
+            <Button variant='ghost'>
+              <Text fontSize={16} fontFamily={'NunitoSans'} color={'#8d97d7'} fontWeight={600}>
+                Twitter
+              </Text>
+            </Button>
           </GridItem>
         </Grid>
 
         <VStack spacing={20}>
-          <Box>
+          <Box ref={googleRef}>
               <Text fontSize={28} fontFamily={'NunitoSans'} color={'#424242'} fontWeight={600} align='center'>Google</Text>
                 <Wrap justify='center'>
 
                   <Checkbox 
-                  
                   isChecked={checkedItems[0]} 
-                  onChange={() => setCheckedItems([false, true])}>
+                  //isDisabled={checkedItems[0]}
+                  onChange={() => setCheckedItems([!checkedItems[0], !checkedItems[1]])}>
                     Word Cloud
                   </Checkbox>
 
                   <Checkbox 
-                  
                   isChecked={checkedItems[1]} 
-                  onChange={() => {setCheckedItems([true, false])
+                  //sisDisabled={checkedItems[1]}
+                  onChange={() => {setCheckedItems([!checkedItems[0], !checkedItems[1]])
+                    console.log(checkedItems)
                   }}>
                     List View
                   </Checkbox>
 
                 </Wrap> 
-                <ViewChange isTicked={checkedItems[0]} />
-                <GoogleCloud />
+                <ViewChange isTicked={checkedItems[0]} />  
           </Box>
 
-          <Box>
+          <Box ref={youtubeRef}>
             <Text fontSize={28} fontFamily={'NunitoSans'} color={'#424242'} fontWeight={600} align='center'>Youtube</Text>
             <Wrap justify='center'>
               <Checkbox  defaultChecked >Word Cloud</Checkbox>
@@ -166,7 +180,8 @@ function App() {
             </Wrap>
             <YoutubeTrend />
           </Box>
-          <Box>
+
+          <Box ref={twitterRef}>
             <Text fontSize={28} fontFamily={'NunitoSans'} color={'#424242'} fontWeight={600} align='center'>Twitter</Text>
                <Wrap justify='center'>
                   <Checkbox  defaultChecked>Word Cloud</Checkbox>
