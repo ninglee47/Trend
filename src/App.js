@@ -113,6 +113,7 @@ function App() {
         } else {
           const dat = []
           dispatch(updateGoogleTrend(dat))
+          dispatch(updateTagData(dat))
         }
         
         if (dat[1] != null) {
@@ -131,6 +132,7 @@ function App() {
         }else {
           const dat = []
           dispatch(updateTwitterTrend(dat))
+          dispatch(updateTwitterTagData(dat))
         }
       }
     )
