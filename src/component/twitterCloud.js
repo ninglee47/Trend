@@ -1,19 +1,17 @@
 import React from 'react';
-import { useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
 import EmptyDiv from './empty';
 import { TagCloud } from 'react-tagcloud'
 
-export default function GoogleCloud() {
-    const trend = useSelector((state) => state.trend.tagData)
-    //console.log(trend)
+export default function TwitterCloud() {
+    const trend = useSelector((state) => state.trend.twitterTagData)
+    console.log(trend)
 
     const options = {
         luminosity: 'bright',
-        hue: '#5B92ED'
+        hue: '#50c5f2'
     }
 
-    //console.log(options)
-    
     if(trend.length === 0) {
         return(
             <div>
@@ -26,13 +24,13 @@ export default function GoogleCloud() {
         <div>
              
              <TagCloud
-                minSize={25}
-                maxSize={100}
+                minSize={12}
+                maxSize={80}
                 tags={trend}
                 colorOptions={options}
-                onClick={tag => window.open(tag.props.shareurl, '_blank').focus()}
+                onClick={tag => window.open(tag.props.url, '_blank').focus()}
              />
              
         </div>
-    );
+    )
 }

@@ -5,7 +5,7 @@ import { useSelector} from 'react-redux'
 function RelatedItem(props) {
     // Correct! There is no need to specify the key here:
     const title = props.value.query
-    const domian = "https://trends.google.com/"
+    const domian = "https://trends.google.com"
     const url =  domian + props.value.exploreLink
     
     return <li className='list-inline-item'>
