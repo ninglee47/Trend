@@ -3,6 +3,7 @@ import { useSelector} from 'react-redux'
 import EmptyDiv from './empty';
 import { TagCloud } from 'react-tagcloud'
 
+
 export default function GoogleCloud() {
     const trend = useSelector((state) => state.trend.tagData)
     //console.log(trend)
