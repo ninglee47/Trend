@@ -5,7 +5,7 @@ import { TagCloud } from 'react-tagcloud'
 
 export default function TwitterCloud() {
     const trend = useSelector((state) => state.trend.twitterTagData)
-    console.log(trend)
+    //console.log(trend)
 
     const options = {
         luminosity: 'bright',

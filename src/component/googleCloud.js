@@ -6,7 +6,7 @@ import { TagCloud } from 'react-tagcloud'
 
 export default function GoogleCloud() {
     const trend = useSelector((state) => state.trend.tagData)
-    //console.log(trend)
+    console.log(trend)
 
     const options = {
         luminosity: 'bright',
@@ -27,8 +27,8 @@ export default function GoogleCloud() {
         <div>
              
              <TagCloud
-                minSize={25}
-                maxSize={100}
+                minSize={15}
+                maxSize={80}
                 tags={trend}
                 colorOptions={options}
                 onClick={tag => window.open(tag.props.shareurl, '_blank').focus()}

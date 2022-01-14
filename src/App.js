@@ -1,21 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
 import GoogleTrend from './component/google'
 import YoutubeTrend from './component/youtube';
 import TwitterTrend from './component/twitter';
 import GoogleCloud from './component/googleCloud';
 import TwitterCloud from './component/twitterCloud';
-import React, { useState, useMemo, useRef } from 'react'
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import { updateGoogleTrend, updateYoutubeTrend, updateTwitterTrend, updateTagData, updateTwitterTagData } from './redux/trendSlice';
 import { useSelector, useDispatch } from 'react-redux'
-import { ChakraProvider, Grid, GridItem, Text, VStack, Box, Checkbox, Stack, Wrap, extendTheme, Center, Button} from '@chakra-ui/react'
+import { ChakraProvider, Grid, GridItem, Text, VStack, Box, Checkbox, Wrap, extendTheme, Button} from '@chakra-ui/react'
 
 const theme = extendTheme({
   colors: {
-    checkbox: {box: "#5a67b2"}
-  },
+    checkbox: {
+      blue: {
+        100:"#b0bad4",
+        200:"#8593ba",
+        300:"#5B6D9E",
+        400:"#435178",
+        500:"#374365",
+        600:"#22293e"
+      },
+      box: {
+        500: "#5B6D9E"
+      }
+    }
+  }
 })
 
 async function getTrend(country) {
@@ -38,7 +49,7 @@ function preprocessGoogle(trend) {
       var shareurl = {shareurl: item.shareUrl}
       var num = item.formattedTraffic.replace('K+', '')
       elm.value = item.title.query
-      elm.count = parseInt(num) + 5*parseInt(num) 
+      elm.count = parseInt(num)
       elm.props = shareurl
       data.push(elm)
   })
@@ -58,21 +69,22 @@ function preprocessTwitter(trend) {
   return data
 }
 
-function ViewChangeGoogle(prop) {
-  const checked = prop.isTicked
-  if (checked) {
-    return <GoogleCloud />
-  } 
-    return <GoogleTrend />
-}
 
-function ViewChangeTwitter(prop) {
-  const checked = prop.isTicked
-  if (checked) {
-    return <TwitterCloud />
-  } 
-    return <TwitterTrend />
-}
+//function ViewChangeGoogle(prop) {
+//  const checked = prop.isTicked
+//  if (checked) {
+//    return <GoogleCloud />
+//  } 
+//    return <GoogleTrend />
+//}
+//
+//function ViewChangeTwitter(prop) {
+//  const checked = prop.isTicked
+//  if (checked) {
+//    return <TwitterCloud />
+//  } 
+//    return <TwitterTrend />
+//}
 
 function App() {
   //Global state
@@ -108,7 +120,9 @@ function App() {
         if (dat[0].indexOf("default") !== -1) {
           const trendGoogle = JSON.parse(dat[0]).default.trendingSearchesDays[0].trendingSearches
           dispatch(updateGoogleTrend(trendGoogle))
+          console.log(trendGoogle)
           const data = preprocessGoogle(trendGoogle)
+          console.log(data)
           dispatch(updateTagData(data))
         } else {
           const dat = []
@@ -137,33 +151,45 @@ function App() {
       }
     )
   }
+
+  const ViewChangeGoogle = (prop)=>{
+    const checked = prop.isTicked
+  if (checked) {
+    return <GoogleCloud />
+    } else {
+    return <GoogleTrend />
+    }
+  }
+
+  const ViewChangeTwitter = (prop)=> {
+    const checked = prop.isTicked
+    if (checked) {
+      return <TwitterCloud />
+    } else {
+      return <TwitterTrend />
+    }
+  }
+  
   
   return (
     <ChakraProvider theme={theme}>
-        <Grid templateColumns='repeat(10, 1fr)' gap={6} mt='56px' mb='40px'>
+        <Grid templateColumns='repeat(10, 1fr)' gap={6} mt='56px' mb='40px' ml='50px' mr='50px'>
+
           <GridItem ml='8px' colSpan={3}>
             <Text fontSize={32} fontWeight={'bold'} fontFamily={'NunitoSans'} color={'#424242'}>
-              Exploring Trending Topics
+              Trending Topics
             </Text>
           </GridItem>
           <GridItem colSpan={4} mt='9px'>
             <Select options={options} value={value} onChange={changeHandler} />
           </GridItem>
+
           <GridItem colSpan={1} mt='9px' onClick={googleScroll}>
             <Button variant='ghost'>
             <Text fontSize={16} fontFamily={'NunitoSans'} color={'#8d97d7'} fontWeight={600}>
               Google
             </Text>
-
             </Button>
-            
-          </GridItem>
-          <GridItem colSpan={1} mt='9px' onClick={youtubeScroll}> 
-            <Button variant='ghost'>
-              <Text fontSize={16} fontFamily={'NunitoSans'} color={'#8d97d7'} fontWeight={600}>
-                Youtube
-              </Text>
-            </Button> 
           </GridItem>
 
           <GridItem colSpan={1} mt='9px' onClick={twitterScroll}>
@@ -173,18 +199,29 @@ function App() {
               </Text>
             </Button>
           </GridItem>
+
+          <GridItem colSpan={1} mt='9px' onClick={youtubeScroll}> 
+            <Button variant='ghost'>
+              <Text fontSize={16} fontFamily={'NunitoSans'} color={'#8d97d7'} fontWeight={600}>
+                Youtube
+              </Text>
+            </Button> 
+          </GridItem>
+
         </Grid>
 
         <VStack spacing={20}>
           <Box ref={googleRef} w='80%'>
               <Text fontSize={28} fontFamily={'NunitoSans'} color={'#424242'} fontWeight={600} align='center'>Google</Text>
-                <Wrap justify='center'>
+                <Wrap justify='center' mb='10px'>
                   <Checkbox 
+                  colorScheme='checkbox.box'
                   isChecked={checkedItemsGoogle[0]} 
                   onChange={() => setCheckedItemsGoolge([!checkedItemsGoogle[0], !checkedItemsGoogle[1]])}>
                     Word Cloud
                   </Checkbox>
                   <Checkbox 
+                  colorScheme='checkbox.box'
                   isChecked={checkedItemsGoogle[1]}
                   onChange={() => {setCheckedItemsGoolge([!checkedItemsGoogle[0], !checkedItemsGoogle[1]])}}>
                     List View
@@ -193,20 +230,17 @@ function App() {
                 <ViewChangeGoogle isTicked={checkedItemsGoogle[0]} />  
           </Box>
 
-          <Box ref={youtubeRef}>
-            <Text fontSize={28} fontFamily={'NunitoSans'} color={'#424242'} fontWeight={600} align='center'>Youtube</Text>
-            <YoutubeTrend />
-          </Box>
-
           <Box ref={twitterRef} w='80%' pb='50px'>
             <Text fontSize={28} fontFamily={'NunitoSans'} color={'#424242'} fontWeight={600} align='center'>Twitter</Text>
-            <Wrap justify='center'>
+            <Wrap justify='center' mb='10px'>
                   <Checkbox 
+                  colorScheme='checkbox.box'
                   isChecked={checkedItemsTwitter[0]} 
                   onChange={() => setCheckedItemsTwitter([!checkedItemsTwitter[0], !checkedItemsTwitter[1]])}>
                     Word Cloud
                   </Checkbox>
                   <Checkbox 
+                  colorScheme='checkbox.box'
                   isChecked={checkedItemsTwitter[1]} 
                   onChange={() => {setCheckedItemsTwitter([!checkedItemsTwitter[0], !checkedItemsTwitter[1]])}}>
                     List View
@@ -214,6 +248,12 @@ function App() {
                 </Wrap> 
                 <ViewChangeTwitter isTicked={checkedItemsTwitter[0]} /> 
           </Box>
+
+          <Box ref={youtubeRef}>
+            <Text fontSize={28} fontFamily={'NunitoSans'} color={'#424242'} fontWeight={600} align='center'>Youtube</Text>
+            <YoutubeTrend />
+          </Box>
+
         </VStack>
     </ChakraProvider>
   );
