@@ -32,7 +32,7 @@ function Items(props) {
     //console.log(props.tags)
     var value = 0
     if (typeof(props.tags) == 'undefined') {
-        value = 20
+        value = 21
     }else {
         value = props.tags.count
     }
@@ -45,7 +45,7 @@ function Items(props) {
     return (
      <HStack spacing='100px' mb='10px'>
         <Box w='60%'>
-        <Text fontSize={size(value)} fontFamily={'NunitoSans'} color={'#3d4ca4'} fontWeight={'bold'} lineHeight={'105%'}>
+        <Text fontSize={size(value)} fontFamily={'NunitoSans'} color={'#5b92ed'} fontWeight={'bold'} lineHeight={'105%'}>
           <Link href={url} target='_blank' rel="noreferrer" >{title}</Link>
         </Text>
         
@@ -82,8 +82,8 @@ function KeyList(props) {
 export default function GoogleTrend() {
     const trend = useSelector((state) => state.trend.valueGoogle)
     const tags = useSelector((state) => state.trend.tagData)
-    console.log(trend)
-    console.log(tags)
+    //console.log(trend)
+    //console.log(tags)
     
     if(trend.length === 0 || tags.length === 0) {
         return(
@@ -95,7 +95,7 @@ export default function GoogleTrend() {
 
     return(
         <div>
-             <KeyList className='card-body' value={trend} tags={tags}/>
+             <KeyList value={trend} tags={tags}/>
         </div>
     );
 }

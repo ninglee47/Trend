@@ -10,7 +10,7 @@ export default function GoogleCloud() {
 
     const options = {
         luminosity: 'bright',
-        hue: '#5B92ED'
+        hue: '#5b92ed'
     }
 
     //console.log(options)
