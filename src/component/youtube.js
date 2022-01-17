@@ -1,34 +1,53 @@
+import { Box, HStack, Image, Link, Text } from '@chakra-ui/react';
 import React from 'react';
 import { useSelector} from 'react-redux'
 import EmptyDiv from './empty';
 
 function ListItem(props) {
-    // Correct! There is no need to specify the key here:
+    console.log(props.value)
     const title = props.value.snippet.title
     const url =  "https://www.youtube.com/watch?v=" + props.value.id
     const channel = "https://www.youtube.com/channel/" + props.value.snippet.channelId
-    return <li className='list-group-item'>
-        <a href={url} target='_blank' rel="noreferrer">{title}</a>
-        <div>
-            Channel: 
-            <a href={channel} target='_blank' rel="noreferrer">
-            {props.value.snippet.channelTitle}
-            </a>
-        </div>
-        <div>Views: {props.value.statistics.viewCount}</div>
-    </li>
+    return <Box maxW='sm' overflow='hidden' pb={'20px'}>
+        <Image src={props.value.snippet.thumbnails.high.url} alt={title}/>
+        <Text fontFamily={'NunitoSans'} color={'#424242'} isTruncated fontWeight={'bold'}>
+          <Link href={url} target='_blank' rel="noreferrer">{title}</Link>
+        </Text>
+        <Box>
+            <HStack>
+              <Text fontFamily={'NunitoSans'} color={'#424242'} fontWeight={'bold'}>
+              Channel: 
+              </Text>
+              <Text fontFamily={'NunitoSans'} color={'#424242'}>
+                <Link href={channel} target='_blank' rel="noreferrer">
+                 {props.value.snippet.channelTitle}
+                </Link>
+              </Text>
+            </HStack>
+            
+        </Box>
+        <Box>
+            <HStack>
+            <Text fontFamily={'NunitoSans'} color={'#424242'} fontWeight={'bold'}>
+              Views: 
+            </Text> 
+              <Text fontFamily={'NunitoSans'} color={'#424242'} >
+                {props.value.statistics.viewCount}
+              </Text> 
+            </HStack>
+        </Box>
+    </Box>
 }
 
 function VideoList(props) {
     const videos = props.value;
     const listItems = videos.map((video) =>
-      // Correct! Key should be specified inside the array.
       <ListItem key={video.id} value={video} />
     );
     return (
-      <ul className='list-group list-group-flush'>
+      <div>
         {listItems}
-      </ul>
+      </div>
     );
 }
 
@@ -46,9 +65,8 @@ export default function YoutubeTrend() {
     }
 
     return (
-        <div className='card'>
-            <h2 className="text-center card-header">Youtube Videos</h2>
-            <VideoList  className='card-body' value={trend} />
+        <div>
+            <VideoList value={trend} />
         </div>
     )
 }

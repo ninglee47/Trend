@@ -4,7 +4,7 @@ import YoutubeTrend from './component/youtube';
 import TwitterTrend from './component/twitter';
 import GoogleCloud from './component/googleCloud';
 import TwitterCloud from './component/twitterCloud';
-import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
+import React, { useState, useMemo, useRef} from 'react'
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import { updateGoogleTrend, updateYoutubeTrend, updateTwitterTrend, updateTagData, updateTwitterTagData } from './redux/trendSlice';
@@ -32,11 +32,14 @@ const theme = extendTheme({
 async function getTrend(country) {
   var option = {
     method: "POST",
-    headers: {'Content-Type': 'application/json'},
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': 'https://trend-server.herokuapp.com/'
+    },
     body: JSON.stringify(country)
   }
 
-  var res = await fetch("/trend", option)
+  var res = await fetch("https://trend-server.herokuapp.com/trend", option)
   var dat = await res.json()
   
   return dat
@@ -69,26 +72,8 @@ function preprocessTwitter(trend) {
   return data
 }
 
-
-//function ViewChangeGoogle(prop) {
-//  const checked = prop.isTicked
-//  if (checked) {
-//    return <GoogleCloud />
-//  } 
-//    return <GoogleTrend />
-//}
-//
-//function ViewChangeTwitter(prop) {
-//  const checked = prop.isTicked
-//  if (checked) {
-//    return <TwitterCloud />
-//  } 
-//    return <TwitterTrend />
-//}
-
 function App() {
   //Global state
-  const trend = useSelector((state) => state.trend.value)
   const dispatch = useDispatch()
 
   //Local state
@@ -152,7 +137,8 @@ function App() {
     )
   }
 
-  const ViewChangeGoogle = (prop)=>{
+//Switch view button (Google)
+const ViewChangeGoogle = (prop)=>{
     const checked = prop.isTicked
   if (checked) {
     return <GoogleCloud />
@@ -161,6 +147,7 @@ function App() {
     }
   }
 
+  //Switch view button (Twitter)
   const ViewChangeTwitter = (prop)=> {
     const checked = prop.isTicked
     if (checked) {
