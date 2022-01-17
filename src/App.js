@@ -105,9 +105,7 @@ function App() {
         if (dat[0].indexOf("default") !== -1) {
           const trendGoogle = JSON.parse(dat[0]).default.trendingSearchesDays[0].trendingSearches
           dispatch(updateGoogleTrend(trendGoogle))
-          console.log(trendGoogle)
           const data = preprocessGoogle(trendGoogle)
-          console.log(data)
           dispatch(updateTagData(data))
         } else {
           const dat = []

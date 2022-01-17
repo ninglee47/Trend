@@ -4,7 +4,7 @@ import { useSelector} from 'react-redux'
 import EmptyDiv from './empty';
 
 function ListItem(props) {
-    console.log(props.value)
+    //console.log(props.value)
     const title = props.value.snippet.title
     const url =  "https://www.youtube.com/watch?v=" + props.value.id
     const channel = "https://www.youtube.com/channel/" + props.value.snippet.channelId

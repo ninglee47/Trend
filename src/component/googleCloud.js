@@ -6,7 +6,7 @@ import { TagCloud } from 'react-tagcloud'
 
 export default function GoogleCloud() {
     const trend = useSelector((state) => state.trend.tagData)
-    console.log(trend)
+    //console.log(trend)
 
     const options = {
         luminosity: 'bright',

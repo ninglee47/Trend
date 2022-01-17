@@ -5,3 +5,7 @@
 span.tag-cloud-tag:hover {
   cursor:pointer;
  }
+
+ span.tag-cloud-tag {
+   font-family: 'NunitoSans';
+ }
