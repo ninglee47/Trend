@@ -8,4 +8,5 @@ span.tag-cloud-tag:hover {
 
  span.tag-cloud-tag {
    font-family: 'NunitoSans';
+   font-weight: bold;
  }

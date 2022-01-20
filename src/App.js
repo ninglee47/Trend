@@ -171,7 +171,7 @@ const ViewChangeGoogle = (prop)=>{
 
           <GridItem colSpan={1} mt='9px' onClick={googleScroll}>
             <Button variant='ghost'>
-            <Text fontSize={16} fontFamily={'NunitoSans'} color={'#8d97d7'} fontWeight={600}>
+            <Text fontSize={16} fontFamily={'NunitoSans'} color={'#5b6d9e'} fontWeight={600}>
               Google
             </Text>
             </Button>
@@ -179,7 +179,7 @@ const ViewChangeGoogle = (prop)=>{
 
           <GridItem colSpan={1} mt='9px' onClick={twitterScroll}>
             <Button variant='ghost'>
-              <Text fontSize={16} fontFamily={'NunitoSans'} color={'#8d97d7'} fontWeight={600}>
+              <Text fontSize={16} fontFamily={'NunitoSans'} color={'#5b6d9e'} fontWeight={600}>
                 Twitter
               </Text>
             </Button>
@@ -187,7 +187,7 @@ const ViewChangeGoogle = (prop)=>{
 
           <GridItem colSpan={1} mt='9px' onClick={youtubeScroll}> 
             <Button variant='ghost'>
-              <Text fontSize={16} fontFamily={'NunitoSans'} color={'#8d97d7'} fontWeight={600}>
+              <Text fontSize={16} fontFamily={'NunitoSans'} color={'#5b6d9e'} fontWeight={600}>
                 Youtube
               </Text>
             </Button> 
@@ -235,7 +235,7 @@ const ViewChangeGoogle = (prop)=>{
           </Box>
 
           <Box ref={youtubeRef}>
-            <Text fontSize={28} fontFamily={'NunitoSans'} color={'#424242'} fontWeight={600} align='center'>Youtube</Text>
+            <Text fontSize={28} fontFamily={'NunitoSans'} color={'#424242'} fontWeight={600} align='center' mb={'20px'}>Youtube</Text>
             <YoutubeTrend />
           </Box>
 

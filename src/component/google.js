@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector} from 'react-redux'
-import { Box, HStack, Text, Link, List, useStyleConfig } from '@chakra-ui/react';
+import { Box, HStack, Stack, Text, Link, List, Center, Divider } from '@chakra-ui/react';
 import EmptyDiv from './empty';
 
 function RelatedItems(props) {
@@ -17,8 +17,8 @@ function RelatedItems(props) {
 function size(traffic) {
     //console.log(traffic)
     var num = traffic*3
-    if (num > 100) {
-        num = 100
+    if (num > 80) {
+        num = 80
     }else if (num < 20) {
         num = 21
     }
@@ -43,18 +43,29 @@ function Items(props) {
     );
 
     return (
-     <HStack spacing='100px' mb='10px'>
-        <Box w='60%'>
-        <Text fontSize={size(value)} fontFamily={'NunitoSans'} color={'#5b92ed'} fontWeight={'bold'} lineHeight={'105%'}>
+    <Box>
+    
+     <HStack spacing='100px' mb='20px'>
+        <Center w='60%'>
+        <Text fontSize={size(value)} fontFamily={'NunitoSans'} color={'#5b92ed'} fontWeight={'bold'} lineHeight={'105%'} align={'center'}>
           <Link href={url} target='_blank' rel="noreferrer" >{title}</Link>
         </Text>
         
-        </Box>
+        </Center>
         <Box w='40%'>
-        <Text fontSize={21} fontFamily={'NunitoSans'} color={'#202962'}>Traffic: {props.value.formattedTraffic}</Text>
-          <Text fontSize={21} fontFamily={'NunitoSans'} color={'#202962'}>Related queries: {listItems}</Text>
+        <HStack pb='10px'>
+          <Text fontSize={21} fontFamily={'NunitoSans'} color={'#424242'} fontWeight={'bold'}>Traffic</Text>
+          <Text fontSize={21} fontFamily={'NunitoSans'} color={'#424242'}>{props.value.formattedTraffic}</Text>
+        </HStack>
+        <Stack justifyContent={'left'}> 
+          <Text fontSize={21} fontFamily={'NunitoSans'} color={'#424242'} fontWeight={'bold'} >Related queries </Text>
+          <Text fontSize={21} fontFamily={'NunitoSans'} color={'#424242'}>{listItems}</Text>
+        </Stack>
+          
         </Box>
-    </HStack>);
+    </HStack>
+    <Divider mb={'10px'} borderWidth={'1px'}/>
+    </Box>);
 }
 
 function findTag(keyword,tags) {
@@ -65,7 +76,7 @@ function findTag(keyword,tags) {
 function KeyList(props) {
     const keywords = props.value;
     const tags = props.tags;
-    console.log(tags)
+    //console.log(tags)
    
     const listItems = keywords.map((keyword, index) =>
       // Correct! Key should be specified inside the array.

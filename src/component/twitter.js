@@ -1,4 +1,4 @@
-import { List,Link,Box, Text, HStack } from '@chakra-ui/react';
+import { List,Link,Box, Text, HStack, Center, Divider } from '@chakra-ui/react';
 import React from 'react';
 import { useSelector } from 'react-redux'
 import EmptyDiv from './empty';
@@ -6,8 +6,8 @@ import EmptyDiv from './empty';
 function size(volume) {
     //console.log(volume)
     var num = volume/1000
-    if (num > 100) {
-        num = 80
+    if (num > 75) {
+        num = 75
     }else if (num < 20) {
         num = 21
     }
@@ -22,29 +22,45 @@ function Item(props) {
     
     if (props.value.tweet_volume == null) {
         return (
-            <HStack spacing='100px' mb='10px'>
-              <Box w='60%'>
-                  <Text fontSize={20} fontFamily={'NunitoSans'} color={'#50c5f2'} fontWeight={'bold'} lineHeight={'105%'}>
+          <Box>
+            <HStack spacing='10px' mb='15px'>
+              <Center w='60%'>
+                  <Text fontSize={20} fontFamily={'NunitoSans'} color={'#50c5f2'} fontWeight={'bold'} lineHeight={'105%'}
+                  align={'center'}>
                     <Link href={url} target='_blank' rel="noreferrer">{title}</Link>
                   </Text>
-              </Box>
+              </Center>
               <Box w='40%'>
-                <Text fontSize={21} fontFamily={'NunitoSans'} color={'#202962'}>Tweet volume: N/A</Text>
+              <HStack>
+                  <Text fontSize={21} fontFamily={'NunitoSans'} color={'#424242'} fontWeight={'bold'}>Tweet volume: {props.value.tweet_volume}</Text>
+                  <Text fontSize={21} fontFamily={'NunitoSans'} color={'#424242'}>N/A</Text>
+                </HStack>
               </Box>
             </HStack>
+            <Divider mb={'10px'} borderWidth={'1px'}/>
+          </Box>
         )
     } else {
         return (
-            <HStack spacing='100px' mb='10px'>
+          <Box>
+            <HStack spacing='10px' mb='15px'>
               <Box w='60%'>
-                  <Text fontSize={size(props.value.tweet_volume)} fontFamily={'NunitoSans'} color={'#50c5f2'} fontWeight={'bold'} lineHeight={'105%'}>
+                  <Text fontSize={size(props.value.tweet_volume)} 
+                  fontFamily={'NunitoSans'} color={'#50c5f2'} fontWeight={'bold'} lineHeight={'105%'}
+                  align={'center'}>
                     <Link href={url} target='_blank' rel="noreferrer">{title}</Link>
                   </Text>
               </Box>
               <Box w='40%'>
-                <Text fontSize={21} fontFamily={'NunitoSans'} color={'#202962'}>Tweet volume: {props.value.tweet_volume}</Text>
+                <HStack>
+                  <Text fontSize={21} fontFamily={'NunitoSans'} color={'#424242'} fontWeight={'bold'}>Tweet volume: </Text>
+                  <Text fontSize={21} fontFamily={'NunitoSans'} color={'#424242'}>{props.value.tweet_volume}</Text>
+                </HStack>
+                
               </Box>
             </HStack>
+            <Divider mb={'10px'} borderWidth={'1px'}/>
+            </Box>
         )
     }
 }
@@ -58,7 +74,7 @@ function HashtagList(props) {
       <Item key={hashtag.name} value={hashtag} />
     );
     return (
-      <List className='list-group list-group-flush'>
+      <List >
         {listItems}
       </List>
     );
