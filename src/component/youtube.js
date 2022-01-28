@@ -11,11 +11,11 @@ function ListItem(props) {
     return <Box pb={'10px'} >
       <Grid templateColumns='repeat(10, 1fr)' gap={1}>
 
-        <GridItem colSpan={{ base: '5', sm: '3' }}  colStart={{ base: '5', sm: '2' }} rowStart={{ base: '1', sm: '1' }} pr={'10px'}>
+        <GridItem colSpan={{ base: '7', sm: '3' }}  colStart={{ base: '3', sm: '2' }} rowStart={{ base: '1', sm: '1' }} pr={'10px'}>
           <Image src={props.value.snippet.thumbnails.medium.url} alt={title}/>
         </GridItem>
           
-        <GridItem colSpan={6} colStart={{ base: '5', sm: '5' }} rowStart={{ base: '2', sm: '1' }}>
+        <GridItem colSpan={6} colStart={{ base: '3', sm: '5' }} rowStart={{ base: '2', sm: '1' }}>
           <VStack alignItems={'left'}>
             <Text pt={{ base: '5px', sm: '20px' }} maxW={'lg'} fontFamily={'NunitoSans'} color={'#424242'} isTruncated fontWeight={'bold'}>
               <Link href={url} target='_blank' rel="noreferrer">{title}</Link>
