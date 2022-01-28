@@ -8,7 +8,7 @@ import React, { useState, useMemo, useRef} from 'react'
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import { updateGoogleTrend, updateYoutubeTrend, updateTwitterTrend, updateTagData, updateTwitterTagData } from './redux/trendSlice';
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { ChakraProvider, Grid, GridItem, Text, VStack, Box, Checkbox, Wrap, extendTheme, Button} from '@chakra-ui/react'
 
 const theme = extendTheme({
@@ -160,16 +160,17 @@ const ViewChangeGoogle = (prop)=>{
     <ChakraProvider theme={theme}>
         <Grid templateColumns='repeat(10, 1fr)' gap={6} mt='56px' mb='40px' ml='50px' mr='50px'>
 
-          <GridItem ml='8px' colSpan={3}>
-            <Text fontSize={32} fontWeight={'bold'} fontFamily={'NunitoSans'} color={'#424242'}>
+          <GridItem ml='8px' colSpan={3} rowStart={{ base: '1', sm: '1' }}>
+            <Text align={'center'} fontSize={{ base: '20', sm: '25', md:'40' }} fontWeight={'bold'} fontFamily={'NunitoSans'} color={'#424242'}>
               Trending Topics
             </Text>
           </GridItem>
-          <GridItem colSpan={4} mt='9px'>
+          
+          <GridItem colSpan={4} mt='9px' rowStart={{ base: '2', sm: '1' }}>
             <Select options={options} value={value} onChange={changeHandler} />
           </GridItem>
 
-          <GridItem colSpan={1} mt='9px' onClick={googleScroll}>
+          <GridItem colSpan={1} mt='9px' onClick={googleScroll} rowStart={{ base: '3', sm: '1' }}>
             <Button variant='ghost'>
             <Text fontSize={16} fontFamily={'NunitoSans'} color={'#5b6d9e'} fontWeight={600}>
               Google
@@ -177,7 +178,7 @@ const ViewChangeGoogle = (prop)=>{
             </Button>
           </GridItem>
 
-          <GridItem colSpan={1} mt='9px' onClick={twitterScroll}>
+          <GridItem colSpan={1} mt='9px' onClick={twitterScroll} rowStart={{ base: '3', sm: '1' }}>
             <Button variant='ghost'>
               <Text fontSize={16} fontFamily={'NunitoSans'} color={'#5b6d9e'} fontWeight={600}>
                 Twitter
@@ -185,7 +186,7 @@ const ViewChangeGoogle = (prop)=>{
             </Button>
           </GridItem>
 
-          <GridItem colSpan={1} mt='9px' onClick={youtubeScroll}> 
+          <GridItem colSpan={1} mt='9px' onClick={youtubeScroll} rowStart={{ base: '3', sm: '1' }}> 
             <Button variant='ghost'>
               <Text fontSize={16} fontFamily={'NunitoSans'} color={'#5b6d9e'} fontWeight={600}>
                 Youtube
@@ -215,7 +216,7 @@ const ViewChangeGoogle = (prop)=>{
                 <ViewChangeGoogle isTicked={checkedItemsGoogle[0]} />  
           </Box>
 
-          <Box ref={twitterRef} w='80%' pb='50px'>
+          <Box ref={twitterRef} w='80%' pb='20px'>
             <Text fontSize={28} fontFamily={'NunitoSans'} color={'#424242'} fontWeight={600} align='center'>Twitter</Text>
             <Wrap justify='center' mb='10px'>
                   <Checkbox 
