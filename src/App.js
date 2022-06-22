@@ -9,7 +9,7 @@ import Select from 'react-select'
 import countryList from 'react-select-country-list'
 import { updateGoogleTrend, updateYoutubeTrend, updateTwitterTrend, updateTagData, updateTwitterTagData } from './redux/trendSlice';
 import { useDispatch } from 'react-redux'
-import { ChakraProvider, Grid, GridItem, Text, VStack, Box, Checkbox, Wrap, extendTheme, Button} from '@chakra-ui/react'
+import { ChakraProvider, useToast,Grid, GridItem, Text, VStack, Box, Checkbox, Wrap, extendTheme, Button} from '@chakra-ui/react'
 
 const theme = extendTheme({
   colors: {
@@ -28,6 +28,21 @@ const theme = extendTheme({
     }
   }
 })
+
+//async function getTrend(country) {
+//  var option = {
+//    method: "POST",
+//    headers: {
+//      'Content-Type': 'application/json'
+//    },
+//    body: JSON.stringify(country)
+//  }
+//
+//  var res = await fetch("/trend", option)
+//  var dat = await res.json()
+//  
+//  return dat
+//}
 
 async function getTrend(country) {
   var option = {
@@ -72,6 +87,7 @@ function preprocessTwitter(trend) {
   return data
 }
 
+
 function App() {
   //Global state
   const dispatch = useDispatch()
@@ -79,6 +95,8 @@ function App() {
   //Local state
   const [value, setValue] = useState('')
   const options = useMemo(() => countryList().getData(), [])
+  
+  const toast = useToast()
 
   //View switch
   const [checkedItemsGoogle, setCheckedItemsGoolge] = React.useState([true, false])
@@ -92,12 +110,10 @@ function App() {
   const youtubeScroll = () => {youtubeRef.current.scrollIntoView()}
   const twitterScroll = () => {twitterRef.current.scrollIntoView()}
   
-  
-  
   //Dropdown menu event handler
   const changeHandler = value => {
+    
     setValue(value)
-    //console.log(value)
     getTrend(value).then(
       dat => {
         //console.log(dat)
@@ -239,7 +255,7 @@ const ViewChangeGoogle = (prop)=>{
             <Text fontSize={28} fontFamily={'NunitoSans'} color={'#424242'} fontWeight={600} align='center' mb={'20px'}>Youtube</Text>
             <YoutubeTrend />
           </Box>
-
+        
         </VStack>
     </ChakraProvider>
   );

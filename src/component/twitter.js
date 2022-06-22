@@ -68,8 +68,10 @@ function Item(props) {
 function HashtagList(props) {
     const hashtags = props.value[0].trends;
     //console.log(hashtags)
-    
-    const listItems = hashtags.map((hashtag) =>
+    let arrayForSort = [...hashtags]
+    arrayForSort.sort((a, b) => b.tweet_volume - a.tweet_volume);
+    //console.log("sorted", arrayForSort)
+    const listItems = arrayForSort.map((hashtag) =>
       // Correct! Key should be specified inside the array.
       <Item key={hashtag.name} value={hashtag} />
     );
@@ -84,7 +86,6 @@ function HashtagList(props) {
 export default function TwitterTrend() {
     const trend = useSelector((state) => state.trend.valueTwitter)
     //console.log(trend)
-
     if(trend.length === 0) {
         return(
             <div>

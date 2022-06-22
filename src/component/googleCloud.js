@@ -25,7 +25,7 @@ export default function GoogleCloud() {
 
     return(
         <div>
-             
+        
              <TagCloud
                 minSize={15}
                 maxSize={80}
